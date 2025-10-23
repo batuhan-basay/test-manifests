@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: food
+resources:
+  - deployment.yaml
+  - service.yaml
+configMapGenerator:
+  - name: marketplace-finance-dashboard-configs
+    behavior: create
+    envs:
+      - .env
+commonLabels:
+  tier: service
+  app: marketplace-finance-dashboard
+  apptype: internal

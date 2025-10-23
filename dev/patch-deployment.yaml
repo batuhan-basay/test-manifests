@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels: null
+  name: marketplace-finance-dashboard
+spec:
+  template:
+    metadata:
+      annotations:
+        vault.security.banzaicloud.io/vault-addr: https://vault-dev.tower.getirapi.com
+        vault.security.banzaicloud.io/vault-path: kubernetes-eu-west-1-dev
+        vault.security.banzaicloud.io/vault-role: dev-food-marketplace-finance-marketplace-finance-dashboard-role
+    spec:
+      containers:
+        - env:
+            - name: NEW_RELIC_LICENSE_KEY
+              value: vault:kubernetes/data/global/new-relic#NEW_RELIC_LICENSE_KEY
+            - name: MAIN_LOCALS_MONGODB_URL
+              value: mongodb+srv://${vault:mongodbatlas/static-creds/food-marketplace-finance-static-marketplace-finance-dashboard-food-development-food-dev-finance#username}:${vault:mongodbatlas/static-creds/food-marketplace-finance-static-marketplace-finance-dashboard-food-development-food-dev-finance#password}@food-dev-finance.teklper.mongodb.net/food-dev-finance?readPreference=secondaryPreferred&w=majority&appName=marketplace-finance-dashboard-service
+            - name: MAIN_FOOD_MONGODB_URL
+              value: mongodb+srv://${vault:mongodbatlas/static-creds/food-marketplace-finance-static-marketplace-finance-dashboard-food-development-food-dev-finance#username}:${vault:mongodbatlas/static-creds/food-marketplace-finance-static-marketplace-finance-dashboard-food-development-food-dev-finance#password}@food-dev-finance.teklper.mongodb.net/food-dev-finance?readPreference=secondaryPreferred&w=majority&appName=marketplace-finance-dashboard-service
+            - name: MAIN_WATER_MONGODB_URL
+              value: mongodb+srv://${vault:mongodbatlas/static-creds/food-marketplace-finance-static-marketplace-finance-dashboard-food-development-food-dev-finance#username}:${vault:mongodbatlas/static-creds/food-marketplace-finance-static-marketplace-finance-dashboard-food-development-food-dev-finance#password}@food-dev-finance.teklper.mongodb.net/food-dev-finance?readPreference=secondaryPreferred&w=majority&appName=marketplace-finance-dashboard-service
+            - name: RABBITMQ_URI
+              value: amqps://${vault:rabbitmq/data/getir-dev/eu-west-1/payback-rabbitmq-broker/marketplace-finance-dashboard#username}:${vault:rabbitmq/data/getir-dev/eu-west-1/payback-rabbitmq-broker/marketplace-finance-dashboard#password}@b-98bcdf8d-6a17-4a23-9c9d-a08ec617e910.mq.eu-west-1.amazonaws.com:5671/marketplace-sap
+          image: 406421550649.dkr.ecr.eu-west-1.amazonaws.com/marketplace-finance-dashboard-service:d6bbd05
+          name: marketplace-finance-dashboard

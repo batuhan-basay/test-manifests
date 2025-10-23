@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+  name: marketplace-finance-dashboard
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        vault.security.banzaicloud.io/vault-role: dev-food-marketplace-finance-marketplace-finance-dashboard-role
+        vault.security.banzaicloud.io/vault-addr: "https://vault-dev.tower.getirapi.com"
+        vault.security.banzaicloud.io/vault-path: kubernetes-eu-west-1-dev
+    spec:
+      serviceAccountName: tbe-k8s-role-sa
+      containers:
+        - name: marketplace-finance-dashboard
+          env:
+            - name: NEW_RELIC_LICENSE_KEY
+              value: vault:kubernetes/data/global/new-relic#NEW_RELIC_LICENSE_KEY
+            - name: SENTRY_DSN
+              value: vault:kubernetes/data/food/marketplace-finance/eu-west-1/dev/marketplace-finance-dashboard/unrestricted#SENTRY_DSN

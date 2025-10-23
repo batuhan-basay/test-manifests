@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: marketplace-finance-dashboard-service-manifests
+  description: The kustomize manifests to deploy the service
+  links:
+    - url: https://bitbucket.org/getirdev/marketplace-finance-dashboard-service-manifests
+      title: View on BitBucket
+spec:
+  type: manifests
+  lifecycle: production
+  owner: food/marketplace-finance
+  subcomponentOf: component:default/marketplace-finance-dashboard-service
